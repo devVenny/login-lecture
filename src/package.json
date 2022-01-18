@@ -15,7 +15,6 @@
   "bin": {
     "login-lecture": "bin/www.js"
   },
-  "devDependencies": {},
   "keywords": [],
   "description": ""
 }
