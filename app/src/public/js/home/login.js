@@ -1,8 +1,10 @@
 "use strict";
 
-const id = document.getElementById("id"),
-  psword = document.getElementById("psword"),
+const id = document.getElementById("login__username"),
+  psword = document.getElementById("login__password"),
   loginBtn = document.getElementById("loginBtn");
+
+console.log();
 
 loginBtn.addEventListener("click", () => {
   const req = {

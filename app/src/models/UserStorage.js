@@ -25,12 +25,11 @@ class UserStorage {
   static getUserInfo(id) {
     const users = this.#users;
     const idx = users.id.indexOf(id);
-    const usersKey = Object.keys(users);
-    const userInfo = usersKey.reduce((newUser, info) => {
-      newUser[info] = users[info][idx];
-      return newUser;
+    const userInfo = Object.keys(users).reduce((userInfo, key) => {
+      userInfo[key] = users[key][idx];
+      return userInfo;
     }, {});
-    return userInfo; // { id: '이형섭', psword: '123', name: 'hs' }
+    return userInfo;
   }
 }
 
