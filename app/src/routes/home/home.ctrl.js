@@ -1,5 +1,6 @@
 "use strict";
 
+const User = require("../../models/User");
 const UserStorage = require("../../models/UserStorage");
 
 const output = {
@@ -14,12 +15,15 @@ const output = {
 
 const process = {
   login: (req, res) => {
-    const id = req.body.id;
-    const psword = req.body.psword;
-    const response = {};
+    const user = new User(req.body); // 유저가 요청할 떄 보낸 body 값(id,psword)
+    const response = user.login();
+    return res.json(response);
+    // const id = req.body.id;
+    // const psword = req.body.psword;
+    // const response = {};
 
-    const users = UserStorage.getUsers("id", "psword");
-    console.log(users);
+    //     const users = UserStorage.getUsers("id", "psword");
+
     // if (users.id.includes(id)) {
     //   const idx = users.id.indexOf(id); // 0
     //   if (users.psword[idx] === psword) {
