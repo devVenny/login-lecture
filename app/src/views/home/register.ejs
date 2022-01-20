@@ -12,12 +12,16 @@
     <div class="login-page">
       <div class="form">
         <form class="login-form">
+          <input type="text" placeholder="username" id="name" />
           <input type="text" placeholder="username" id="id" />
           <input type="password" placeholder="password" id="psword" />
-          <button id="button">LOG IN</button>
-          <p class="message">
-            Not registered? <a href="/register">Create an account</a>
-          </p>
+          <input
+            type="password"
+            placeholder="confirm password"
+            id="confirm-psword"
+          />
+          <button id="button">SIGN IN</button>
+          <p class="message">Already registered? <a href="/login">Log in</a></p>
         </form>
       </div>
     </div>
