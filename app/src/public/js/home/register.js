@@ -7,12 +7,17 @@ const username = document.getElementById("username"),
   signinBtn = document.getElementById("sigin-button");
 
 signinBtn.addEventListener("click", (e) => {
+  if (psword.value !== pswordConfirm.value) {
+    return alert("비밀번호가 일치하지 않습니다.");
+  }
+  if (!id.value) {
+    return alert("아이디를 입력해주세요.");
+  }
   e.preventDefault();
   const req = {
     name: username.value,
     id: id.value,
     psword: psword.value,
-    pswordConfirm: pswordConfirm.value,
   };
 
   fetch("/register", {

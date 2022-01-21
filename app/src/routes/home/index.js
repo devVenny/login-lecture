@@ -13,5 +13,5 @@ router.get("/register", ctrl.output.register);
 
 // POST
 router.post("/login", ctrl.process.login); // request의 body 값을 읽어오려면 bodyparse 모듈이 필요하다.
-// router.post("/register", ctrl.process.register);
+router.post("/register", ctrl.process.register);
 module.exports = router;
