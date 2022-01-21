@@ -2,7 +2,7 @@
 
 const id = document.getElementById("id"),
   psword = document.getElementById("psword"),
-  loginBtn = document.getElementById("button");
+  loginBtn = document.getElementById("login-button");
 
 loginBtn.addEventListener("click", () => {
   const req = {
