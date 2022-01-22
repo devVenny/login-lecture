@@ -1,15 +1,21 @@
 "use strict";
 
+const fs = require("fs").promises;
+
 class UserStorage {
-  static #users = {
-    id: ["이형섭", "나예림", "구본경"],
-    psword: ["123", "1234", "12345"],
-    name: ["hs", "yr", "bk"],
-  };
+  // 은닉화한 메소드는 항상 코드의 최상단으로 올린다
+  static #getUserInfo(data, id) {
+    const users = JSON.parse(data);
+    const idx = users.id.indexOf(id);
+    const userInfo = Object.keys(users).reduce((newUser, key) => {
+      newUser[key] = users[key][idx];
+      return newUser;
+    }, {});
+    return userInfo;
+  }
 
   static getUsers(...fields) {
-    // fields = ["id", "psword", "name"]
-    const users = this.#users;
+    // const users = this.#users;
     const newUsers = fields.reduce((newUsers, field) => {
       if (users.hasOwnProperty(field)) {
         //  field = 각각의 요소(by 순회)/ [id, psword, name ]에 id, psword, name 값 체크 return boolean
@@ -23,17 +29,17 @@ class UserStorage {
   }
 
   static getUserInfo(id) {
-    const users = this.#users;
-    const idx = users.id.indexOf(id);
-    const userInfo = Object.keys(users).reduce((userInfo, key) => {
-      userInfo[key] = users[key][idx];
-      return userInfo;
-    }, {});
-    return userInfo;
+    // const users = this.#users;
+    return fs
+      .readFile("./src/database/users.json")
+      .then((data) => {
+        return this.#getUserInfo(data, id);
+      })
+      .catch((err) => console.error(err));
   }
 
   static save(userInfo) {
-    const users = this.#users;
+    // const users = this.#users;
     users.id.push(userInfo.id);
     users.psword.push(userInfo.psword);
     users.name.push(userInfo.name);

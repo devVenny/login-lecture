@@ -4,7 +4,8 @@ const id = document.getElementById("id"),
   psword = document.getElementById("psword"),
   loginBtn = document.getElementById("login-button");
 
-loginBtn.addEventListener("click", () => {
+loginBtn.addEventListener("click", (e) => {
+  e.preventDefault();
   const req = {
     id: id.value,
     psword: psword.value,
