@@ -14,22 +14,28 @@ class UserStorage {
     return userInfo;
   }
 
-  static getUsers(...fields) {
-    // const users = this.#users;
+  static #getUsers(data, isAll, fields) {
+    const users = JSON.parse(data);
+    if (isAll) return users;
     const newUsers = fields.reduce((newUsers, field) => {
       if (users.hasOwnProperty(field)) {
-        //  field = 각각의 요소(by 순회)/ [id, psword, name ]에 id, psword, name 값 체크 return boolean
-        // 있으면 true(조건문 실행o) 없으면 false(조건문 실행x)
-        // newUsers에 필드 추가
         newUsers[field] = users[field];
-        return newUsers; // 새로운 users 변수 생성
+        return newUsers;
       }
     }, {});
     return newUsers;
   }
 
+  static getUsers(isAll, ...fields) {
+    return fs
+      .readFile("./src/database/users.json")
+      .then((data) => {
+        return this.#getUsers(data, isAll, fields);
+      })
+      .catch((err) => console.error(err));
+  }
+
   static getUserInfo(id) {
-    // const users = this.#users;
     return fs
       .readFile("./src/database/users.json")
       .then((data) => {
@@ -38,11 +44,16 @@ class UserStorage {
       .catch((err) => console.error(err));
   }
 
-  static save(userInfo) {
-    // const users = this.#users;
+  static async save(userInfo) {
+    const users = await this.getUsers(true); // 모든 fields값을 가져오겠다는 의미의 true
+    console.log(users);
+    if (users.id.includes(userInfo.id)) {
+      throw "이미 존재하는 아이디입니다.";
+    }
     users.id.push(userInfo.id);
-    users.psword.push(userInfo.psword);
     users.name.push(userInfo.name);
+    users.psword.push(userInfo.psword);
+    fs.writeFile("./src/database/users.json", JSON.stringify(users));
     return { success: true };
   }
 }
